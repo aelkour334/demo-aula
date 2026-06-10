@@ -2,31 +2,103 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>Registro Aula</title>
+<title>Control de Aulas</title>
+
 <style>
 body {
-  text-align: center;
-  font-family: Arial;
-  margin-top: 50px;
+  font-family: Arial, sans-serif;
+  background-color: #f4f6f8;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
 }
+
+.container {
+  background: white;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0px 4px 15px rgba(0,0,0,0.1);
+  text-align: center;
+  width: 300px;
+}
+
+h1 {
+  margin-bottom: 10px;
+}
+
+.subtitle {
+  color: gray;
+  margin-bottom: 20px;
+}
+
 button {
-  padding: 10px;
-  margin: 5px;
+  width: 100%;
+  padding: 12px;
+  margin: 5px 0;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.btn-open {
+  background-color: #28a745;
+  color: white;
+}
+
+.btn-close {
+  background-color: #dc3545;
+  color: white;
+}
+
+button:hover {
+  opacity: 0.9;
+}
+
+#mensaje {
+  margin-top: 15px;
+  font-weight: bold;
+  color: #333;
+}
+
+.historial {
+  margin-top: 20px;
+  text-align: left;
+  max-height: 150px;
+  overflow-y: auto;
+}
+
+.historial li {
+  font-size: 14px;
+  padding: 5px 0;
+  border-bottom: 1px solid #eee;
 }
 </style>
+
 </head>
 
 <body>
 
-<h1>Aula A102</h1>
+<div class="container">
+  <h1>Aula A102</h1>
+  <p class="subtitle">Sistema de control de accesos</p>
 
-<button onclick="registrar('Apertura')">Abrir Aula</button>
-<button onclick="registrar('Cierre')">Cerrar Aula</button>
+  <button class="btn-open" onclick="registrar('Apertura')">
+    Abrir Aula
+  </button>
 
-<p id="mensaje"></p>
+  <button class="btn-close" onclick="registrar('Cierre')">
+    Cerrar Aula
+  </button>
 
-<h3>Historial:</h3>
-<ul id="lista"></ul>
+  <p id="mensaje"></p>
+
+  <div class="historial">
+    <ul id="lista"></ul>
+  </div>
+</div>
 
 <script>
 function registrar(tipo) {
