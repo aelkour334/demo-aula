@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Registro Aula</title>
+<style>
+body {
+  text-align: center;
+  font-family: Arial;
+  margin-top: 50px;
+}
+button {
+  padding: 10px;
+  margin: 5px;
+}
+</style>
+</head>
+
+<body>
+
+<h1>Aula A102</h1>
+
+<button onclick="registrar('Apertura')">Abrir Aula</button>
+<button onclick="registrar('Cierre')">Cerrar Aula</button>
+
+<p id="mensaje"></p>
+
+<h3>Historial:</h3>
+<ul id="lista"></ul>
+
+<script>
+function registrar(tipo) {
+    let fecha = new Date().toLocaleString();
+
+    document.getElementById("mensaje").innerText =
+        tipo + " registrada correctamente";
+
+    let item = document.createElement("li");
+    item.textContent = tipo + " - " + fecha;
+
+    document.getElementById("lista").appendChild(item);
+}
+</script>
+
+</body>
+</html>
