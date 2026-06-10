@@ -20,27 +20,35 @@ body {
   padding: 30px;
   border-radius: 12px;
   box-shadow: 0px 4px 15px rgba(0,0,0,0.1);
+  width: 320px;
   text-align: center;
-  width: 300px;
 }
 
-h1 {
+h2 {
   margin-bottom: 10px;
 }
 
-.subtitle {
-  color: gray;
-  margin-bottom: 20px;
+input {
+  width: 100%;
+  padding: 10px;
+  margin: 8px 0;
+  border-radius: 6px;
+  border: 1px solid #ccc;
 }
 
 button {
   width: 100%;
   padding: 12px;
-  margin: 5px 0;
+  margin-top: 8px;
   border: none;
   border-radius: 8px;
-  font-size: 16px;
   cursor: pointer;
+  font-size: 15px;
+}
+
+.btn-login {
+  background-color: #007bff;
+  color: white;
 }
 
 .btn-open {
@@ -53,27 +61,35 @@ button {
   color: white;
 }
 
-button:hover {
-  opacity: 0.9;
+.btn-logout {
+  background-color: #6c757d;
+  color: white;
+}
+
+.hidden {
+  display: none;
+}
+
+#error {
+  color: red;
+  font-size: 14px;
 }
 
 #mensaje {
   margin-top: 15px;
   font-weight: bold;
-  color: #333;
 }
 
-.historial {
-  margin-top: 20px;
-  text-align: left;
-  max-height: 150px;
-  overflow-y: auto;
-}
-
-.historial li {
+.usuario {
   font-size: 14px;
-  padding: 5px 0;
-  border-bottom: 1px solid #eee;
+  color: gray;
+  margin-bottom: 10px;
+}
+
+ul {
+  text-align: left;
+  max-height: 120px;
+  overflow-y: auto;
 }
 </style>
 
@@ -82,25 +98,73 @@ button:hover {
 <body>
 
 <div class="container">
-  <h1>Aula A102</h1>
-  <p class="subtitle">Sistema de control de accesos</p>
 
-  <button class="btn-open" onclick="registrar('Apertura')">
-    Abrir Aula
-  </button>
+  <!-- LOGIN -->
+  <div id="login">
+    <h2>Acceso al sistema</h2>
+    <input type="text" id="usuario" placeholder="Usuario">
+    <input type="password" id="password" placeholder="Contraseña">
+    <button class="btn-login" onclick="login()">Iniciar sesión</button>
+    <p id="error"></p>
+  </div>
 
-  <button class="btn-close" onclick="registrar('Cierre')">
-    Cerrar Aula
-  </button>
+  <!-- SISTEMA -->
+  <div id="sistema" class="hidden">
+    <h2>Aula A102</h2>
+    <p class="usuario" id="userLabel"></p>
 
-  <p id="mensaje"></p>
+    <button class="btn-open" onclick="registrar('Apertura')">
+      Abrir Aula
+    </button>
 
-  <div class="historial">
+    <button class="btn-close" onclick="registrar('Cierre')">
+      Cerrar Aula
+    </button>
+
+    <button class="btn-logout" onclick="logout()">
+      Cerrar sesión
+    </button>
+
+    <p id="mensaje"></p>
+
+    <h3>Historial</h3>
     <ul id="lista"></ul>
   </div>
+
 </div>
 
 <script>
+
+// Usuarios simulados
+const usuarios = {
+  "profesor": "1234",
+  "admin": "admin",
+  "alumno": "1234"
+};
+
+function login() {
+    let user = document.getElementById("usuario").value;
+    let pass = document.getElementById("password").value;
+
+    if (!usuarios[user] || usuarios[user] !== pass) {
+        document.getElementById("error").innerText = "Credenciales incorrectas";
+        return;
+    }
+
+    // Bloqueo alumnos
+    if (user === "alumno") {
+        document.getElementById("error").innerText = "Acceso denegado";
+        return;
+    }
+
+    // Login correcto
+    document.getElementById("login").style.display = "none";
+    document.getElementById("sistema").style.display = "block";
+
+    document.getElementById("userLabel").innerText =
+        "Usuario: " + user;
+}
+
 function registrar(tipo) {
     let fecha = new Date().toLocaleString();
 
@@ -112,6 +176,16 @@ function registrar(tipo) {
 
     document.getElementById("lista").appendChild(item);
 }
+
+function logout() {
+    document.getElementById("login").style.display = "block";
+    document.getElementById("sistema").style.display = "none";
+    document.getElementById("usuario").value = "";
+    document.getElementById("password").value = "";
+    document.getElementById("mensaje").innerText = "";
+    document.getElementById("error").innerText = "";
+}
+
 </script>
 
 </body>
